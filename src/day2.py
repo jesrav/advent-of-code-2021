@@ -41,15 +41,23 @@ def parse_course_input(input_list: List[str]) -> List[SubmarineStep]:
 
 class Submarine:
 
-    def __init__(self, start_horizontal: int, start_depth: int):
+    def __init__(self, start_horizontal: int, start_depth: int, use_aim: bool = False, start_aim: int = 0):
         self.horizontal_position = start_horizontal
         self.depth_position = start_depth
+        self.use_aim = use_aim
+        self.aim = start_aim
 
-    def change_depth(self, step: int):
-        self.horizontal_position += step 
+    def change_depth(self, step: SubmarineStep):
+        self.horizontal_position += step.horizontal_step
     
-    def change_horizontal(self, step: int):
-        self.depth_position += step 
+    def change_horizontal(self, step: SubmarineStep):
+        if self.use_aim:
+            self.depth_position += self.aim*step.horizontal_step
+        else:
+            self.depth_position += step.depth_step
+
+    def update_aim(self, step: SubmarineStep):
+        self.aim += step.depth_step
 
     @property
     def position(self):
@@ -57,19 +65,31 @@ class Submarine:
 
     def sail_planned_course(self, planned_course: List[SubmarineStep]):
         for submarine_step in planned_course:
-            self.change_horizontal(submarine_step.horizontal_step)
-            self.change_depth(submarine_step.depth_step)
-
+            self.change_horizontal(submarine_step)
+            self.change_depth(submarine_step)
+            self.update_aim(submarine_step)
 
 # Test case part 1
 submarine = Submarine(0, 0)
 submarine.sail_planned_course(parse_course_input(test_data))
 assert submarine.position[0] * submarine.position[1] == 150
 
+# Test case part 2
+submarine = Submarine(0, 0, use_aim=True)
+submarine.sail_planned_course(parse_course_input(test_data))
+assert submarine.position[0] * submarine.position[1] == 900
 
 if __name__ == "__main__":
     input_data = read_input("data/day2.txt")
+
+    # Part 1
     submarine = Submarine(0, 0)
     submarine.sail_planned_course(parse_course_input(input_data))
     part1 = submarine.position[0] * submarine.position[1]
     print(f"Part 1: {part1} ") 
+
+    # Part 2
+    submarine = Submarine(0, 0, use_aim=True)
+    submarine.sail_planned_course(parse_course_input(input_data))
+    part1 = submarine.position[0] * submarine.position[1]
+    print(f"Part 2: {part1} ") 
