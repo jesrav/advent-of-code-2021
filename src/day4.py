@@ -74,11 +74,6 @@ class Bingo:
         for board in self.boards_left:
             board.mark_number(number)
 
-    def check_for_winner(self) -> Union[int, None]:
-        for board in self.boards:
-            if board.has_winning_row:
-                return board
-
     def play(self) -> int:
         for number in self.number_sequence:
             self.call_number(number)
