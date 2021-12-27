@@ -44,7 +44,7 @@ def binary_list_to_number(binary_list: list[int]) -> int:
     return int(binary_str, 2)
 
 
-def filter(input_data: np.array, filter_on_least_common: bool = False) -> List[int]:
+def filter_bits(input_data: np.array, filter_on_least_common: bool = False) -> List[int]:
     i = 0
     n_bits = input_data.shape[1] 
     rows = input_data.shape[0]
@@ -67,8 +67,8 @@ empsilon_rate_binary = least_common_bits_from_most_common(gama_rate_binary)
 assert binary_list_to_number(gama_rate_binary) * binary_list_to_number(empsilon_rate_binary) == 198
 
 # Test case, part 2
-oxigen_generator_rating = filter(input_test_data)
-co2_scrubber_rating = filter(input_test_data, filter_on_least_common=True)
+oxigen_generator_rating = filter_bits(input_test_data)
+co2_scrubber_rating = filter_bits(input_test_data, filter_on_least_common=True)
 assert binary_list_to_number(oxigen_generator_rating) * binary_list_to_number(co2_scrubber_rating) == 230
 
 if __name__ == "__main__":
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     print(f"Part 1: {part1_answer}")
 
     # Part 2
-    oxigen_generator_rating = filter(input_data)
-    co2_scrubber_rating = filter(input_data, filter_on_least_common=True)
+    oxigen_generator_rating = filter_bits(input_data)
+    co2_scrubber_rating = filter_bits(input_data, filter_on_least_common=True)
     part2_answer = binary_list_to_number(oxigen_generator_rating) * binary_list_to_number(co2_scrubber_rating)
     print(f"Part 2: {part2_answer}")
