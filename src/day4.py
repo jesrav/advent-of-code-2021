@@ -53,16 +53,25 @@ class Board:
         marked_numbers_zeroed = np.where(self.board_markings == True, 0, self.board_numbers)
         return sum(sum(marked_numbers_zeroed)) * self.numbers_called[-1]
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return (self.board_numbers == other.board_numbers).all()
+        else:
+            return False
 
 class Bingo:
 
     def __init__(self, number_sequence: List[int], boards: List[Board]) -> None:
         self.number_sequence = number_sequence
         self.boards = boards
+        self.winning_boards = []
 
+    @property
+    def boards_left(self):
+        return [b for b in self.boards if b not in self.winning_boards]
 
     def call_number(self, number: int) -> None:
-        for board in self.boards:
+        for board in self.boards_left:
             board.mark_number(number)
 
     def check_for_winner(self) -> Union[int, None]:
@@ -73,9 +82,12 @@ class Bingo:
     def play(self) -> int:
         for number in self.number_sequence:
             self.call_number(number)
-            for board in self.boards:
+            if len(self.boards_left) == 0:
+                break
+
+            for board in self.boards_left:
                 if board.has_winning_row:
-                    return board.score
+                    self.winning_boards.append(board)
 
     @staticmethod
     def parse_single_board_line(board_line: str) -> list[int]:
@@ -103,14 +115,16 @@ class Bingo:
 
 # Test part 1
 bingo_test = Bingo.from_raw_input(raw_test_data)
-assert bingo_test.play() == 4512
+bingo_test.play()
+assert bingo_test.winning_boards[0].score == 4512
 
+# Test part 2
+assert bingo_test.winning_boards[-1].score == 1924
 
 if __name__ == "__main__":
 
     raw_input_data = read_input("data/day4.txt")
     bingo = Bingo.from_raw_input(raw_input_data)
-
-    # Part 1
-    part1_answer = bingo.play()
-    print(f"Part 1: {part1_answer}")
+    bingo.play()
+    print(f"Part 1: {bingo.winning_boards[0].score}")
+    print(f"Part 2: {bingo.winning_boards[-1].score}")
