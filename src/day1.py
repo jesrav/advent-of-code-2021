@@ -29,10 +29,10 @@ def count_increasing_depths(depths: List[int]) -> int:
     return count    
 
 
-def create_moving_averages(depths: List[int], n=3) -> List[int]:
+def create_moving_averages(depths: List[int]) -> List[int]:
     moving_sums = []
     for i, depth in enumerate(depths):
-        if i < n - 1:
+        if i < 2:
             moving_sum = None
         else:
             moving_sum = depth + depths[i - 1] + depths[i - 2]
@@ -47,6 +47,5 @@ if __name__ == "__main__":
     input_data = read_input("data/day1.txt")  
     print(f"Part 1: {count_increasing_depths(input_data)}")  
 
-    window_size = 3
-    part2 = count_increasing_depths(create_moving_averages(input_data)[window_size - 1:])
-    print(f"Part 2: {part2}")  
+    part2 = count_increasing_depths(create_moving_averages(input_data)[2:])
+    print(f"Part 2: {part2}")

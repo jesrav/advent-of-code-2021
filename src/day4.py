@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List
 from itertools import groupby
 
 import numpy as np
@@ -25,6 +25,7 @@ raw_test_data = [
     "22 11 13 6 5",
     "2 0 12 3 7",
 ]
+
 
 def read_input(fpath: str) -> List[str]:
     with open(fpath) as f:
