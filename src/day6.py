@@ -6,55 +6,6 @@ from common import read_input
 test_data = "3,4,3,1,2"
 
 
-# class FishCohort:
-#     def __init__(self, timer: int = 8, fish_tally: int = 1):
-#         self.timer = timer
-#         self.fish_tally = fish_tally
-#
-#     def add_fish(self, n):
-#         self.fish_tally += n
-#
-#     def reset_timer(self, value: int = 6):
-#         self.timer = value
-#
-#     def age_a_day(self):
-#         self.timer -= 1
-#
-#     def __repr__(self):
-#         return f"Fish(timer={self.timer})"
-#
-#
-# class FishPopulation:
-#     def __init__(self, fish_population: List[FishCohort]):
-#         self.fish_population = fish_population
-#
-#     def add_new_fish(self, n: int):
-#         [f for f in self.fish_population if f.timer == timer][0]
-#
-#     def increment_day(self):
-#         new_fish = []
-#         for cohort in self.fish_population:
-#             if cohort.timer == 0:
-#                 cohort.reset_timer()
-#
-#             else:
-#                 cohort.age_a_day()
-#         self.fish_population += new_fish
-#
-#     def increment_days(self, days: int):
-#         for _ in range(days):
-#             self.increment_day()
-#
-#     @property
-#     def size(self):
-#         return len(self.fish_population)
-#
-#     @classmethod
-#     def from_raw_data(cls, raw_data: str) -> 'FishPopulation':
-#         fish_population = [Fish(timer=int(n)) for n in raw_data.split(",")]
-#         return FishPopulation(fish_population)
-
-
 class FishPopulation:
     def __init__(self, cohorts: Dict[int, int]):
         self.cohorts = defaultdict(lambda: 0)
@@ -88,6 +39,7 @@ class FishPopulation:
     def from_raw_data(cls, raw_data: str) -> 'FishPopulation':
         cohorts = dict(Counter([int(n) for n in raw_data.split(",")]))
         return FishPopulation(cohorts=cohorts)
+
 
 # Test part 1
 population = FishPopulation.from_raw_data(test_data)
