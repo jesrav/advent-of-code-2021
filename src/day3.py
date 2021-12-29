@@ -3,6 +3,7 @@ from typing import List
 
 import numpy as np
 
+from common import read_input
 
 test_data = [
     "00100",
@@ -20,26 +21,21 @@ test_data = [
 ]
 
 
-def read_input(fpath: str) -> List[str]:
-    with open(fpath) as f:
-        return [line.replace('\n', '') for line in f.readlines()]
-
-
 def parse_input(raw_input_data: List[str]) -> np.array:
     return np.array([list(s) for s in raw_input_data]).astype(int)
 
 
-def get_most_common_bits(input_data: np.array) -> list[int]:
+def get_most_common_bits(input_data: np.array) -> List[int]:
     input_length = input_data.shape[0]
     one_most_common = input_data.sum(axis=0) >= (input_length / 2)
     return (1*one_most_common).tolist()
     
 
-def least_common_bits_from_most_common(gamma_rate: list[int]) -> list[int]:
+def least_common_bits_from_most_common(gamma_rate: List[int]) -> List[int]:
     return [1 - bit for bit in gamma_rate]
 
 
-def binary_list_to_number(binary_list: list[int]) -> int:
+def binary_list_to_number(binary_list: List[int]) -> int:
     binary_str = "".join([str(bit) for bit in binary_list])
     return int(binary_str, 2)
 

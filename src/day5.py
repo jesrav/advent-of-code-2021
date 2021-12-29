@@ -5,6 +5,8 @@ from typing import List
 import numpy as np
 from tqdm import tqdm
 
+from common import read_input
+
 raw_test_data = [
     "0,9 -> 5,9",
     "8,0 -> 0,8",
@@ -17,11 +19,6 @@ raw_test_data = [
     "0,0 -> 8,8",
     "5,5 -> 8,2",
 ]
-
-
-def read_input(fpath: str) -> List[str]:
-    with open(fpath) as f:
-        return [line.replace('\n', '') for line in f.readlines()]
 
 
 @dataclass

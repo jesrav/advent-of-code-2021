@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
+from common import read_input
 
 test_data = [
     "forward 5",
@@ -10,11 +11,6 @@ test_data = [
     "down 8",
     "forward 2",
 ]
-
-
-def read_input(fpath: str) -> List[str]:
-    with open(fpath) as f:
-        return [line.replace('\n', '') for line in f.readlines()]
         
 
 @dataclass

@@ -3,6 +3,7 @@ from itertools import groupby
 
 import numpy as np
 
+from common import read_input
 
 raw_test_data = [
     "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1",
@@ -25,11 +26,6 @@ raw_test_data = [
     "22 11 13 6 5",
     "2 0 12 3 7",
 ]
-
-
-def read_input(fpath: str) -> List[str]:
-    with open(fpath) as f:
-        return [line.replace('\n', '') for line in f.readlines()]
 
 
 class Board:
@@ -86,7 +82,7 @@ class Bingo:
                     self.winning_boards.append(board)
 
     @staticmethod
-    def parse_single_board_line(board_line: str) -> list[int]:
+    def parse_single_board_line(board_line: str) -> List[int]:
         return [int(n) for n in board_line.split(" ") if n != ""]
 
     @classmethod
