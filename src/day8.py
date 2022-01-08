@@ -30,16 +30,10 @@ original_mapping = {
 }
 
 
-def sort_chars(chars: str) -> str:
-    return "".join(sorted(chars))
-
-
 def parse_raw_line(raw: str) -> Tuple[List[str], List[str]]:
     entries, entries_to_decode = raw.split(" | ")
     entries = entries.split(" ")
-    entries = [sort_chars(entry) for entry in entries]
     entries_to_decode = entries_to_decode.split(" ")
-    entries_to_decode = [sort_chars(entry) for entry in entries_to_decode]
     return entries, entries_to_decode
 
 
@@ -71,7 +65,7 @@ class Decoder:
         sorted_entries = [self._sort_chars(entry) for entry in entries]
         self.new_mapping.update(
             {
-                sort_chars(chars): self.length_to_unique_digit_map[len(chars)]
+                self._sort_chars(chars): self.length_to_unique_digit_map[len(chars)]
                 for chars in sorted_entries
                 if len(chars) in self.length_to_unique_digit_map
             }
