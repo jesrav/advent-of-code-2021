@@ -56,6 +56,7 @@ class Board:
         else:
             return False
 
+
 class Bingo:
 
     def __init__(self, number_sequence: List[int], boards: List[Board]) -> None:
