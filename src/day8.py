@@ -73,7 +73,7 @@ class Decoder:
             {
                 sort_chars(chars): self.length_to_unique_digit_map[len(chars)]
                 for chars in sorted_entries
-                if len(chars) in self.unique_length_to_digit_map
+                if len(chars) in self.length_to_unique_digit_map
             }
         )
 
@@ -93,17 +93,27 @@ class Decoder:
 
 
 # Part 1 test
-line_entries, line_entries_to_decode = parse_raw_lines(raw_test_data)
+test_line_entries, test_line_entries_to_decode = parse_raw_lines(raw_test_data)
 count = 0
-for entries, entries_to_decode in zip(line_entries, line_entries_to_decode):
+for entries, entries_to_decode in zip(test_line_entries, test_line_entries_to_decode):
     decoder = Decoder(original_mapping=original_mapping)
     decoder.fit(entries)
-    decoder.transform(entries_to_decode)
+    decoded = decoder.transform(entries_to_decode)
+    count += sum([0 if el is None else 1 for el in decoded])
+assert count == 26
 
 
 if __name__ == "__main__":
     # Part 2
-    print(f"Part 1: {}")
+    raw_data = read_input("data/day8.txt")
+    line_entries, line_entries_to_decode = parse_raw_lines(raw_data)
+    count = 0
+    for entries, entries_to_decode in zip(line_entries, line_entries_to_decode):
+        decoder = Decoder(original_mapping=original_mapping)
+        decoder.fit(entries)
+        decoded = decoder.transform(entries_to_decode)
+        count += sum([0 if el is None else 1 for el in decoded])
+    print(f"Part 1: {count}")
 
     # Part 2
-    print(f"Part 1: {}")
+    # print(f"Part 1: {}")
